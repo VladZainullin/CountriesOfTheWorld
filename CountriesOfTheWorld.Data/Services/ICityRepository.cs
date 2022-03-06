@@ -2,8 +2,8 @@ using CountriesOfTheWorld.Core.Entities;
 
 namespace CountriesOfTheWorld.Data.Services;
 
-public interface ICityRepository
+public interface ICityRepository<in TId>
 {
-    public Task<IEnumerable<Country>> GetAllAsync();
-    public Task<Country> GetByIdAsync(Guid id);
+    public Task<IEnumerable<City?>> GetAllAsync();
+    public Task<City?> GetByIdAsync(TId id);
 }

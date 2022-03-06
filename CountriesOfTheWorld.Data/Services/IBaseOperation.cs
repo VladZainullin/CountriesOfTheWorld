@@ -1,10 +1,11 @@
 namespace CountriesOfTheWorld.Data.Services;
 
-public interface IBaseOperation<in T>
+public interface IBaseOperation<in TEntity>
 {
-    public Task AddAsync(T entity);
 
-    public void Delete(T entity);
+    public Task AddAsync(TEntity entity);
+
+    public void Delete(TEntity entity);
 
     public Task SaveChangesAsync();
 }
