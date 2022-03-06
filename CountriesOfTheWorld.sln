@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountriesOfTheWorld", "Coun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountriesOfTheWorld.Core", "CountriesOfTheWorld.Core\CountriesOfTheWorld.Core.csproj", "{4FBCDBC1-82B5-41AE-986D-D6894DD6F91B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountriesOfTheWorld.Data", "CountriesOfTheWorld.Data\CountriesOfTheWorld.Data.csproj", "{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4FBCDBC1-82B5-41AE-986D-D6894DD6F91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FBCDBC1-82B5-41AE-986D-D6894DD6F91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FBCDBC1-82B5-41AE-986D-D6894DD6F91B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
