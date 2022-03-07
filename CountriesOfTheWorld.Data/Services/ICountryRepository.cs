@@ -2,7 +2,7 @@ using CountriesOfTheWorld.Core.Entities;
 
 namespace CountriesOfTheWorld.Data.Services;
 
-public interface ICountryRepository<in TId>
+public interface ICountryRepository<in TId> : IBaseOperation<Country>
 {
     public Task<IEnumerable<Country?>> GetAllAsync(bool includeCities);
     public Task<Country?> GetByIdAsync(TId id, bool includeCities);
