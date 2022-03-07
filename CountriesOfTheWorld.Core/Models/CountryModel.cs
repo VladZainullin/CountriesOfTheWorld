@@ -3,7 +3,7 @@ using CountriesOfTheWorld.Core.Entities;
 
 namespace CountriesOfTheWorld.Core.Models;
 
-public record class CountryModel
+public class CountryModel
 {
     [Required]
     [MaxLength(50)]

@@ -5,18 +5,19 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Handlers;
 
-public class DeleteCountryHandler : IRequestHandler<DeleteCountryCommand, bool>
+public class DeleteCountryByIdHandler : IRequestHandler<DeleteCountryByIdCommand, bool>
 {
     private readonly ICountryRepository<Guid> _repository;
 
-    public DeleteCountryHandler(ICountryRepository<Guid> repository)
+    public DeleteCountryByIdHandler(ICountryRepository<Guid> repository)
     {
         _repository = repository;
     }
     
-    public async Task<bool> Handle(DeleteCountryCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteCountryByIdCommand request, CancellationToken cancellationToken)
     {
-        var country = await _repository.GetByIdAsync(request.Id, request.includeCities);
+        if (request == null) throw new ArgumentNullException(nameof(request));
+        var country = await _repository.GetByIdAsync(request.Id, false);
         if (country is not null)
         {
             _repository.Delete(country);

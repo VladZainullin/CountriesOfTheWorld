@@ -1,6 +1,7 @@
 using CountriesOfTheWorld.Core.Entities;
 using CountriesOfTheWorld.Core.Models;
 using CountriesOfTheWorld.Data.Commands;
+using CountriesOfTheWorld.Data.Exceptions;
 using CountriesOfTheWorld.Data.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +36,6 @@ public class CountriesController : ControllerBase
         {
             var query = new GetAllCountriesQuery(includeCities);
             var result = await _mediator.Send(query);
-            if (result is null)
-            {
-                return BadRequest("Countries not found. Please, create new country");
-            }
-
             return result;
         }
         catch (Exception e)
@@ -55,16 +51,12 @@ public class CountriesController : ControllerBase
         {
             var query = new GetCountryByIdQuery(id, includeCities);
             var result = await _mediator.Send(query);
-            if (result is null)
-            {
-                return BadRequest("Country not found");
-            }
 
             return result;
         }
-        catch (Exception e)
+        catch (CountryException e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+            return NotFound(e.Message);
         }
     } 
     
@@ -75,16 +67,11 @@ public class CountriesController : ControllerBase
         {
             var query = new GetCountryByNameQuery(name, includeCities);
             var result = await _mediator.Send(query);
-            if (result is null)
-            {
-                return BadRequest("Country not found");
-            }
-
             return result;
         }
-        catch (Exception e)
+        catch (CountryException e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+            return NotFound(e.Message);
         }
     } 
     
@@ -93,14 +80,13 @@ public class CountriesController : ControllerBase
     {
         try
         {
-            var query = new CreateCountryQuery(model);
+            var query = new CreateCountryCommand(model);
             var result = await _mediator.Send(query);
-            if (result == null)
-            {
-                return BadRequest("Country not found");
-            }
-            
             return result;
+        }
+        catch (ArgumentNullException)
+        {
+            return BadRequest("Country already exists");
         }
         catch (Exception e)
         {
@@ -133,7 +119,22 @@ public class CountriesController : ControllerBase
     {
         try
         {
-            var query = new DeleteCountryCommand(id, includeCities);
+            var query = new DeleteCountryByIdCommand(id);
+            await _mediator.Send(query);
+            return Ok("Country has been deleted");
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+        }
+    }
+    
+    [HttpDelete("{name}")]
+    public async Task<ActionResult> Post(string name, bool includeCities = true)
+    {
+        try
+        {
+            var query = new DeleteCountryByNameCommand(name);
             await _mediator.Send(query);
             return Ok("Country has been deleted");
         }

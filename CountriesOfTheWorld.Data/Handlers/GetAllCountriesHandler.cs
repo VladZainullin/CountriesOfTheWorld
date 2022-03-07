@@ -1,5 +1,6 @@
 using CountriesOfTheWorld.Core.Entities;
 using CountriesOfTheWorld.Core.Models;
+using CountriesOfTheWorld.Data.Exceptions;
 using CountriesOfTheWorld.Data.Queries;
 using CountriesOfTheWorld.Data.Services;
 using MediatR;
@@ -20,6 +21,11 @@ public sealed class GetAllCountriesHandler : IRequestHandler<GetAllCountriesQuer
         if (request == null) throw new ArgumentNullException(nameof(request));
         
         var countries = await _repository.GetAllAsync(request.IncludeCities);
+        if (countries == null)
+        {
+            throw new CountryException("Countries not found. Please, create new country");
+        }
+        
         return countries.Select(country => new CountryModel()
         {
             Name = country?.Name,

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Handlers;
 
-public class CreateCountryHandler : IRequestHandler<CreateCountryQuery, CountryModel>
+public class CreateCountryHandler : IRequestHandler<CreateCountryCommand, CountryModel>
 {
     private readonly ICountryRepository<Guid> _repository;
 
@@ -15,15 +15,16 @@ public class CreateCountryHandler : IRequestHandler<CreateCountryQuery, CountryM
         _repository = repository;
     }
     
-    public async Task<CountryModel> Handle(CreateCountryQuery request, CancellationToken cancellationToken)
+    public async Task<CountryModel> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
 
+        
         var country = new Country()
         {
             Id = Guid.NewGuid(),
-            Name = request.model.Name,
-            Area = request.model.Area,
+            Name = request.Model.Name,
+            Area = request.Model.Area,
             Cities = new List<City>()
         };
 
