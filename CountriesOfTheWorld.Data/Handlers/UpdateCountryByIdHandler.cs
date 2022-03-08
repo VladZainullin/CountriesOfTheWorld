@@ -1,24 +1,32 @@
 using CountriesOfTheWorld.Core.Entities;
 using CountriesOfTheWorld.Core.Models;
 using CountriesOfTheWorld.Data.Commands;
+using CountriesOfTheWorld.Data.Exceptions;
 using CountriesOfTheWorld.Data.Services;
 using MediatR;
 
 namespace CountriesOfTheWorld.Data.Handlers;
 
-public class UpdateCountryHandler : IRequestHandler<UpdateCountryCommand, CountryModel>
+public class UpdateCountryByIdHandler : IRequestHandler<UpdateCountryByIdCommand, CountryModel>
 {
     private readonly ICountryRepository<Guid> _repository;
 
-    public UpdateCountryHandler(ICountryRepository<Guid> repository)
+    public UpdateCountryByIdHandler(ICountryRepository<Guid> repository)
     {
         _repository = repository;
     }
     
     
-    public async Task<CountryModel> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
+    public async Task<CountryModel> Handle(UpdateCountryByIdCommand request, CancellationToken cancellationToken)
     {
-        if (request == null) throw new ArgumentNullException(nameof(request));
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+        if (await _repository.GetByIdAsync(request.Id,false) == null)
+        {
+            throw new CountryException("Country not found");
+        }
         
         var country = new Country()
         {
@@ -30,6 +38,7 @@ public class UpdateCountryHandler : IRequestHandler<UpdateCountryCommand, Countr
         
         _repository.Update(country);
         await _repository.SaveChangesAsync();
+        
         return request.Model;
     }
 }

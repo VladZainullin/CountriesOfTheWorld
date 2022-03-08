@@ -1,4 +1,5 @@
 using CountriesOfTheWorld.Data.Commands;
+using CountriesOfTheWorld.Data.Exceptions;
 using CountriesOfTheWorld.Data.Services;
 using MediatR;
 
@@ -16,9 +17,14 @@ public class DeleteCountryByNameHandler : IRequestHandler<DeleteCountryByNameCom
     public async Task<bool> Handle(DeleteCountryByNameCommand request, CancellationToken cancellationToken)
     {
         var country = await _repository.GetByNameAsync(request.Name, false);
-
-        if (country != null) _repository.Delete(country);
+        if (country == null)
+        {
+            throw new CountryException("Country not found");
+        }
+        
+        _repository.Delete(country);
         await _repository.SaveChangesAsync();
+        
         return true;
     }
 }

@@ -1,6 +1,7 @@
 using CountriesOfTheWorld.Core.Entities;
 using CountriesOfTheWorld.Core.Models;
 using CountriesOfTheWorld.Data.Commands;
+using CountriesOfTheWorld.Data.Exceptions;
 using CountriesOfTheWorld.Data.Services;
 using MediatR;
 
@@ -19,6 +20,11 @@ public class CreateCountryHandler : IRequestHandler<CreateCountryCommand, Countr
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
 
+        var exist = await _repository.GetByNameAsync(request.Model.Name, false);
+        if (exist != null)
+        {
+            throw new CountryException("The country with this name already exists");
+        }
         
         var country = new Country()
         {

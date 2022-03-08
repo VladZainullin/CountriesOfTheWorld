@@ -9,4 +9,5 @@ public record class CityModel
     [MaxLength(30)]
     [MinLength(1)]
     public string? Name { get; set; }
+    public Guid CountryId { get; set; }
 }

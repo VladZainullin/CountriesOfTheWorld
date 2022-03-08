@@ -16,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddMediatR(typeof(CountryRepository).Assembly);
 
 builder.Services.AddScoped<ICountryRepository<Guid>, CountryRepository>();
+builder.Services.AddScoped<ICityRepository<Guid>, CityRepository>();
+
 builder.Services.AddDbContext<CountriesOfTheWorldDbContext>(
     opt => opt.UseSqlite("Data Source=database.db"));
 

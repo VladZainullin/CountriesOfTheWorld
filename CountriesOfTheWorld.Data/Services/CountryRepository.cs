@@ -52,13 +52,11 @@ public class CountryRepository : ICountryRepository<Guid>
 
     public async Task AddAsync(Country country)
     {
-        if (country == null) throw new ArgumentNullException(nameof(country));
         await _context.AddAsync(country);
     }
 
     public void Delete(Country country)
     {
-        if (country == null) throw new ArgumentNullException(nameof(country));
         _context.Remove(country);
     }
 
@@ -69,8 +67,6 @@ public class CountryRepository : ICountryRepository<Guid>
     
     public void Update(Country country)
     {
-        if (country == null) throw new ArgumentNullException(nameof(country));
-        
         _context.Update(country);
     }
 }

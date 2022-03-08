@@ -3,4 +3,4 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Commands;
 
-public record class UpdateCountryCommand(CountryModel Model, Guid Id) : IRequest<CountryModel>;
+public record CreateCityCommand(Guid CountryId, CityModel CityModel) : IRequest<CityModel>;

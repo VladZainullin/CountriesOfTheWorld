@@ -18,20 +18,21 @@ public sealed class GetAllCountriesHandler : IRequestHandler<GetAllCountriesQuer
     
     public async Task<List<CountryModel>> Handle(GetAllCountriesQuery request, CancellationToken cancellationToken)
     {
-        if (request == null) throw new ArgumentNullException(nameof(request));
-        
         var countries = await _repository.GetAllAsync(request.IncludeCities);
         if (countries == null)
         {
             throw new CountryException("Countries not found. Please, create new country");
         }
         
-        return countries.Select(country => new CountryModel()
+        return countries
+            .Select(country => new CountryModel()
         {
             Name = country?.Name,
             Area = country.Area,
             Cities = country.Cities
             
-        }).ToList();
+        })
+            .OrderBy(c => c.Name)
+            .ToList();
     }
 }

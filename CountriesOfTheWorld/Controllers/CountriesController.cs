@@ -1,4 +1,3 @@
-using CountriesOfTheWorld.Core.Entities;
 using CountriesOfTheWorld.Core.Models;
 using CountriesOfTheWorld.Data.Commands;
 using CountriesOfTheWorld.Data.Exceptions;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CountriesOfTheWorld.Controllers;
 
+[Produces("application/json")]
 [ApiController]
 [Route("api/[controller]")]
 public class CountriesController : ControllerBase
@@ -30,7 +30,7 @@ public class CountriesController : ControllerBase
     #region Methods
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CountryModel>>> Get(bool includeCities = true)
+    public async Task<ActionResult<IEnumerable<CountryModel>>> GetAllCountries(bool includeCities = true)
     {
         try
         {
@@ -38,9 +38,9 @@ public class CountriesController : ControllerBase
             var result = await _mediator.Send(query);
             return result;
         }
-        catch (Exception e)
+        catch (CountryException e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+            return NotFound(e.Message);
         }
     }
     
@@ -51,12 +51,15 @@ public class CountriesController : ControllerBase
         {
             var query = new GetCountryByIdQuery(id, includeCities);
             var result = await _mediator.Send(query);
-
             return result;
         }
         catch (CountryException e)
         {
             return NotFound(e.Message);
+        }
+        catch (ArgumentNullException e)
+        {
+            return BadRequest(e.Message);
         }
     } 
     
@@ -73,6 +76,10 @@ public class CountriesController : ControllerBase
         {
             return NotFound(e.Message);
         }
+        catch (ArgumentNullException e)
+        {
+            return BadRequest(e.Message);
+        }
     } 
     
     [HttpPost]
@@ -84,13 +91,9 @@ public class CountriesController : ControllerBase
             var result = await _mediator.Send(query);
             return result;
         }
-        catch (ArgumentNullException)
+        catch (CountryException e)
         {
-            return BadRequest("Country already exists");
-        }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+            return BadRequest(e.Message);
         }
     }
 
@@ -99,23 +102,33 @@ public class CountriesController : ControllerBase
     {
         try
         {
-            var query = new UpdateCountryCommand(model, id);
+            var query = new UpdateCountryByIdCommand(model, id);
             var result = await _mediator.Send(query);
-            if (result is null)
-            {
-                return BadRequest("Country not found");
-            }
-
             return result;
         }
-        catch (Exception e)
+        catch (CountryException e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+            return BadRequest(e.Message);
+        }
+    }
+    
+    [HttpPut("{name}")]
+    public async Task<ActionResult<CountryModel>> Put(string name, [FromBody] CountryModel model)
+    {
+        try
+        {
+            var query = new UpdateCountryByNameCommand(model, name);
+            var result = await _mediator.Send(query);
+            return result;
+        }
+        catch (CountryException e)
+        {
+            return BadRequest(e.Message);
         }
     }
     
     [HttpDelete("{id:guid}")]
-    public async Task<ActionResult> Post(Guid id, bool includeCities = true)
+    public async Task<ActionResult> Post(Guid id)
     {
         try
         {
@@ -123,14 +136,14 @@ public class CountriesController : ControllerBase
             await _mediator.Send(query);
             return Ok("Country has been deleted");
         }
-        catch (Exception e)
+        catch (CountryException e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+            return BadRequest(e.Message);
         }
     }
     
     [HttpDelete("{name}")]
-    public async Task<ActionResult> Post(string name, bool includeCities = true)
+    public async Task<ActionResult> Post(string name)
     {
         try
         {
@@ -138,9 +151,9 @@ public class CountriesController : ControllerBase
             await _mediator.Send(query);
             return Ok("Country has been deleted");
         }
-        catch (Exception e)
+        catch (CountryException e)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Database failed");
+            return BadRequest(e.Message);
         }
     }
 
