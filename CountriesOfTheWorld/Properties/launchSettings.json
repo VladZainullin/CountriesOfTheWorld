@@ -3,8 +3,9 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "SSL Enabled": "true",
     "iisExpress": {
-      "applicationUrl": "http://localhost:31391",
+      "applicationUrl": "http://localhost:6600",
       "sslPort": 44334
     }
   },
@@ -12,9 +13,9 @@
     "CountriesOfTheWorld": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api",
-      "applicationUrl": "https://localhost:7100",
+      "applicationUrl": "https://localhost:5566",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

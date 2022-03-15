@@ -7,7 +7,7 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Handlers;
 
-public class UpdateCountryByIdHandler : IRequestHandler<UpdateCountryByIdCommand, CountryModel>
+internal sealed class UpdateCountryByIdHandler : IRequestHandler<UpdateCountryByIdCommand, CountryModel>
 {
     private readonly ICountryRepository<Guid> _repository;
 

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountriesOfTheWorld.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountriesOfTheWorld.Data", "CountriesOfTheWorld.Data\CountriesOfTheWorld.Data.csproj", "{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{C28D73D8-43FB-4947-8189-0CD4AA41639F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,11 @@ Global
 		{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F77945CB-6819-45AF-953B-2C0C7E8E2E0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C28D73D8-43FB-4947-8189-0CD4AA41639F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28D73D8-43FB-4947-8189-0CD4AA41639F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28D73D8-43FB-4947-8189-0CD4AA41639F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28D73D8-43FB-4947-8189-0CD4AA41639F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

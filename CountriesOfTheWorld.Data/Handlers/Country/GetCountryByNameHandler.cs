@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Handlers;
 
-public class GetCountryByNameHandler : IRequestHandler<GetCountryByNameQuery, CountryModel>
+internal sealed class GetCountryByNameHandler : IRequestHandler<GetCountryByNameQuery, CountryModel>
 {
     private readonly ICountryRepository<Guid> _repository;
 

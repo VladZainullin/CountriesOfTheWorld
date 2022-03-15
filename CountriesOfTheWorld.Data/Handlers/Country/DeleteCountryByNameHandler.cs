@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Handlers;
 
-public class DeleteCountryByNameHandler : IRequestHandler<DeleteCountryByNameCommand, bool>
+internal sealed class DeleteCountryByNameHandler : IRequestHandler<DeleteCountryByNameCommand, bool>
 {
     private readonly ICountryRepository<Guid> _repository;
 

@@ -4,4 +4,4 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Commands;
 
-public record CreateCountryCommand(CountryModel Model) : IRequest<CountryModel>;
+public sealed record CreateCountryCommand(CountryModel Model) : IRequest<CountryModel>;

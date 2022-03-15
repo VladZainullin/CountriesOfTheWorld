@@ -3,4 +3,4 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Commands;
 
-public record DeleteCountryByNameCommand(string Name) : IRequest<bool>;
+public sealed record UpdateCountryByIdCommand(CountryModel Model, Guid Id) : IRequest<CountryModel>;

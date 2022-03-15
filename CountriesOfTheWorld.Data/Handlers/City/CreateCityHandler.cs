@@ -7,7 +7,7 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Handlers;
 
-public class CreateCityHandler : IRequestHandler<CreateCityCommand, CityModel>
+internal sealed class CreateCityHandler : IRequestHandler<CreateCityCommand, CityModel>
 {
     private readonly ICityRepository<Guid> _repository;
 
@@ -32,10 +32,10 @@ public class CreateCityHandler : IRequestHandler<CreateCityCommand, CityModel>
             Name = request.CityModel.Name,
             CountryId = request.CountryId
         };
-        
-        
+
         await _repository.AddAsync(city);
         await _repository.SaveChangesAsync();
+        
         return new CityModel()
         {
             Id = city.Id,

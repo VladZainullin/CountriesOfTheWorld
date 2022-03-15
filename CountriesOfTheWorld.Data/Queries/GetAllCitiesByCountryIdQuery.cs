@@ -3,4 +3,4 @@ using MediatR;
 
 namespace CountriesOfTheWorld.Data.Queries;
 
-public record GetAllCitiesByCountryIdQuery(Guid CountryId) : IRequest<List<CityModel>>;
+public sealed record GetAllCitiesByCountryIdQuery(Guid CountryId) : IRequest<List<CityModel>>;
